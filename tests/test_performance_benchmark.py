@@ -84,8 +84,8 @@ class PerformanceBenchmark:
         """Test a single transcription request and measure latency"""
         try:
             # Connect to server
-            control_ws = await websockets.connect(self.control_url)
-            data_ws = await websockets.connect(self.data_url)
+            control_ws = await asyncio.wait_for(websockets.connect(self.control_url), timeout=5)
+            data_ws = await asyncio.wait_for(websockets.connect(self.data_url), timeout=5)
             
             # Prepare audio chunk with verification data
             metadata = {

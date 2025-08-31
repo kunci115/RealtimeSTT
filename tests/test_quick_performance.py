@@ -80,9 +80,9 @@ class QuickPerformanceTest:
     async def test_transcription_latency(self) -> tuple:
         """Test single transcription request, return (latency, text, success)"""
         try:
-            # Connect to server
-            control_ws = await websockets.connect(self.control_url, timeout=5)
-            data_ws = await websockets.connect(self.data_url, timeout=5)
+            # Connect to server (fix timeout parameter)
+            control_ws = await asyncio.wait_for(websockets.connect(self.control_url), timeout=5)
+            data_ws = await asyncio.wait_for(websockets.connect(self.data_url), timeout=5)
             
             # Prepare audio with verification data
             metadata = {

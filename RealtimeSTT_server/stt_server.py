@@ -530,14 +530,14 @@ def parse_arguments():
     parser.add_argument('--min_gap_between_recordings', type=float, default=0,
                         help='Minimum time (in seconds) between consecutive recordings. Setting this helps avoid overlapping recordings when there’s a brief silence between them. Default is 0 seconds.')
 
-    parser.add_argument('--enable_realtime_transcription', action='store_true', default=True,
-                        help='Enable continuous real-time transcription of audio as it is received. When enabled, transcriptions are sent in near real-time. Default is True.')
+    parser.add_argument('--enable_realtime_transcription', type=lambda x: x.lower() == 'true', default=True,
+                        help='Enable continuous real-time transcription of audio as it is received. When enabled, transcriptions are sent in near real-time. Use --enable_realtime_transcription true/false. Default is True.')
 
     parser.add_argument('--realtime_processing_pause', type=float, default=0.02,
                         help='Time interval (in seconds) between processing audio chunks for real-time transcription. Lower values increase responsiveness but may put more load on the CPU. Default is 0.02 seconds.')
 
-    parser.add_argument('--silero_deactivity_detection', action='store_true', default=True,
-                        help='Use the Silero model for end-of-speech detection. This option can provide more robust silence detection in noisy environments, though it consumes more GPU resources. Default is True.')
+    parser.add_argument('--silero_deactivity_detection', type=lambda x: x.lower() == 'true', default=True,
+                        help='Use the Silero model for end-of-speech detection. This option can provide more robust silence detection in noisy environments, though it consumes more GPU resources. Use --silero_deactivity_detection true/false. Default is True.')
 
     parser.add_argument('--early_transcription_on_silence', type=float, default=0.2,
                         help='Start transcription after the specified seconds of silence. This is useful when you want to trigger transcription mid-speech when there is a brief pause. Should be lower than post_speech_silence_duration. Set to 0 to disable. Default is 0.2 seconds.')
@@ -1036,3 +1036,5 @@ def main():
 
 if __name__ == '__main__':
     main()
+
+#python -m RealtimeSTT_server.stt_server --model large-v2 --control_port 8011 --data_port 8012 --verify-data-integrity --compute_type int8 --batch_size 1 --beam_size 1 --enable_realtime_transcription false

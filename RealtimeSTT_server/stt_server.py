@@ -981,10 +981,10 @@ async def main_async():
 
     try:
         # Attempt to start control and data servers
-        control_server = await websockets.serve(control_handler, "localhost", args.control)
-        data_server = await websockets.serve(data_handler, "localhost", args.data)
-        print(f"{bcolors.OKGREEN}Control server started on {bcolors.OKBLUE}ws://localhost:{args.control}{bcolors.ENDC}")
-        print(f"{bcolors.OKGREEN}Data server started on {bcolors.OKBLUE}ws://localhost:{args.data}{bcolors.ENDC}")
+        control_server = await websockets.serve(control_handler, "0.0.0.0", args.control)
+        data_server = await websockets.serve(data_handler, "0.0.0.0", args.data)
+        print(f"{bcolors.OKGREEN}Control server started on {bcolors.OKBLUE}ws://0.0.0.0:{args.control}{bcolors.ENDC}")
+        print(f"{bcolors.OKGREEN}Data server started on {bcolors.OKBLUE}ws://0.0.0.0:{args.data}{bcolors.ENDC}")
 
         # Start the broadcast and recorder threads
         broadcast_task = asyncio.create_task(broadcast_audio_messages())
